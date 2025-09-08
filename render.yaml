@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: skin-lesion-app
+    env: python
+    plan: free
+    buildCommand: |
+      pip install --upgrade pip
+      fallocate -l 1G /swapfile
+      chmod 600 /swapfile
+      mkswap /swapfile
+      swapon /swapfile
+      pip install -r requirements.txt
+    startCommand: gunicorn app:app
