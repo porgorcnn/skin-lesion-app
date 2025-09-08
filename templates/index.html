@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Lesion Classification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Skin Lesion Classification</h1>
+        </div>
+        <p class="subtitle">Upload an image of a skin lesion to predict its class</p>
+
+        <form action="/" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="file" class="file-input" accept="image/*">
+            <label for="file" class="file-label">Choose File</label>
+            <span id="file-name" class="file-name-display">No file chosen</span>
+            <button type="submit" class="btn">Upload & Predict</button>
+        </form>
+
+        {% if error %}
+            <p class="error-text">{{ error }}</p>
+        {% endif %}
+
+        {% if filename %}
+            <div class="result-container">
+                <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image" class="uploaded-image">
+                <h2>Prediction Results:</h2>
+                <p class="prediction-text">
+                    <strong>Class:</strong> {{ predicted_class }}
+                </p>
+                <p class="prediction-text">
+                    <strong>Confidence:</strong> {{ confidence }}
+                </p>
+
+                <div class="all-scores">
+                    <h4>All Class Scores:</h4>
+                    <ul>
+                        {% for class_name, score in all_scores %}
+                            <li>{{ class_name }}: {{ "%.2f"|format(score*100) }}%</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        {% endif %}
+
+    </div>
+    <script>
+        // Script สำหรับแสดงชื่อไฟล์ที่เลือก
+        document.getElementById('file').addEventListener('change', function() {
+            var fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+            document.getElementById('file-name').textContent = fileName;
+        });
+    </script>
+</body>
+</html>

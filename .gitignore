@@ -1,0 +1,17 @@
+# Virtual Environment (Very important)
+.venv/
+venv/
+
+# PyCharm specific files
+.idea/
+
+# Python cache
+__pycache__/
+
+# Large data, model, and upload folders
+*.h5
+saved_model/
+dataset_4class/
+uploads/
+wait/
+test_images/
